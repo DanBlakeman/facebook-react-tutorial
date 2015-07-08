@@ -14,5 +14,17 @@
     {
         "author": "Dan",
         "text": "Faster?"
+    },
+    {
+        "author": "Sam",
+        "text": "http://www.makersacademy.com/"
+    },
+    {
+        "author": "Sam",
+        "text": "Malicious script: <script> alert('hi');</script>"
+    },
+    {
+        "author": "Test",
+        "text": "Ola!"
     }
 ]
