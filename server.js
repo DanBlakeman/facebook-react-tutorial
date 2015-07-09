@@ -29,6 +29,20 @@ app.post('/comments.json', function(req, res) {
   });
 });
 
+app.delete('/comments.json', function(req, res) {
+  fs.readFile('comments.json', function(err, data) {
+    var comments = JSON.parse(data);
+    indexOfComment = comments.indexOf(req.body);
+    comments.splice(indexOfComment, 1);
+    fs.writeFile('comments.json', JSON.stringify(comments, null, 4), function(err) {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.send(JSON.stringify(comments));
+    });
+  });
+});
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
