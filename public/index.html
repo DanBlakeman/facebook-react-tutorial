@@ -25,6 +25,20 @@
             }.bind(this)
           });
         },
+        handleCommentDelete: function (comment) {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            type: 'DELETE',
+            data: comment,
+            success: function(data) {
+              console.log('sent');
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
         handleCommentSubmit: function(comment) {
           var comments = this.state.data;
           var newComments = comments.concat([comment]);
@@ -54,7 +68,7 @@
             <div className="commentBox">
               <h1>Comments</h1>
               <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-              <CommentList data={this.state.data}/>
+              <CommentList data={this.state.data} onCommentDelete={this.handleCommentDelete}/>
             </div>
             );
         }
@@ -62,9 +76,10 @@
 
       var CommentList = React.createClass({
         render: function () {
+          var deleteCallback = this.props.onCommentDelete;
           var commentNodes = this.props.data.map(function (comment) {
             return (
-              <Comment author={comment.author}>
+              <Comment author={comment.author} onDelete={deleteCallback}>
                 {comment.text}
               </Comment>
               );
@@ -103,18 +118,7 @@
 
       var Comment = React.createClass({
         handleDelete: function() {
-          $.ajax({
-            url: 'comments.json',
-            dataType: 'json',
-            type: 'DELETE',
-            data: {author: this.props.author, text: this.props.children},
-            success: function(data) {
-              console.log('sent');
-            }.bind(this),
-            error: function(xhr, status, err) {
-              console.error(this.props.url, status, err.toString());
-            }.bind(this)
-          });
+          this.props.onDelete({author: this.props.author, text: this.props.children} );
         },
         render: function() {
           var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
