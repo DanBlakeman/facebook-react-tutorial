@@ -102,6 +102,20 @@
       });
 
       var Comment = React.createClass({
+        handleDelete: function() {
+          $.ajax({
+            url: 'comments.json',
+            dataType: 'json',
+            type: 'DELETE',
+            data: {author: this.props.author, text: this.props.children},
+            success: function(data) {
+              console.log('sent');
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
         render: function() {
           var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
           return (
@@ -110,6 +124,7 @@
                 {this.props.author}
               </h2>
               <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+              <button onClick={this.handleDelete}>Delete</button>
             </div>
           );
         }

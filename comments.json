@@ -6,25 +6,5 @@
     {
         "author": "Dame Baroness",
         "text": "One enjoys this web app!"
-    },
-    {
-        "author": "Dan",
-        "text": "Is this slow?"
-    },
-    {
-        "author": "Dan",
-        "text": "Faster?"
-    },
-    {
-        "author": "Sam",
-        "text": "http://www.makersacademy.com/"
-    },
-    {
-        "author": "Sam",
-        "text": "Malicious script: <script> alert('hi');</script>"
-    },
-    {
-        "author": "Test",
-        "text": "Ola!"
     }
 ]
