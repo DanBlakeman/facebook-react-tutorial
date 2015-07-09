@@ -26,14 +26,20 @@
           });
         },
         handleCommentDelete: function (comment) {
+          var comments = this.state.data;
+          var indexOfComment;
+          comments.forEach(function(obj, index) {
+            if (obj.author === comment.author && obj.text === comment.text) {
+              indexOfComment = index;
+            }
+          });
+          comments.splice(indexOfComment, 1);
+          this.setState({data: comments});
           $.ajax({
             url: this.props.url,
             dataType: 'json',
             type: 'DELETE',
             data: comment,
-            success: function(data) {
-              console.log('sent');
-            }.bind(this),
             error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
             }.bind(this)

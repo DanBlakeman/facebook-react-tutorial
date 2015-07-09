@@ -32,7 +32,12 @@ app.post('/comments.json', function(req, res) {
 app.delete('/comments.json', function(req, res) {
   fs.readFile('comments.json', function(err, data) {
     var comments = JSON.parse(data);
-    indexOfComment = comments.indexOf(req.body);
+    var indexOfComment;
+    comments.forEach(function(obj, index) {
+      if (obj.author === req.body.author && obj.text === req.body.text) {
+        indexOfComment = index;
+      }
+    });
     comments.splice(indexOfComment, 1);
     fs.writeFile('comments.json', JSON.stringify(comments, null, 4), function(err) {
       res.setHeader('Content-Type', 'application/json');
